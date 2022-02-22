@@ -16,8 +16,16 @@ const createSalles = rescue(async (req, res) => {
   return res.status(201).json(create);
 });
 
+const setStatusController = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  const statusUpdated = await customerService.setStatusService({ id, status });
+  return res.status(200).json(statusUpdated);
+});
+
 module.exports = {
   getAll,
   getById,
   createSalles,
+  setStatusController,
 };

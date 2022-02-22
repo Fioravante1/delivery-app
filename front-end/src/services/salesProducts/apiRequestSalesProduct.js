@@ -30,9 +30,9 @@ async function apiRequestSalesProduct(sale, token) {
   }
 }
 
-export async function apiUpdateSalesProduct(Id, sales) {
+export async function apiUpdateSalesProduct(id, status) {
   try {
-    const updateSales = await edit(`/customer/orders/${Id}`, sales);
+    const updateSales = await edit(`/customer/${id}`, status);
     return updateSales;
   } catch (error) {
     console.log(error);

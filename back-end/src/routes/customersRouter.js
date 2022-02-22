@@ -14,4 +14,7 @@ router.route('/')
 router.route('/')
   .post(validToken, customerController.createSalles);
 
+router.route('/:id')
+  .put(customerController.setStatusController);
+
 module.exports = router;

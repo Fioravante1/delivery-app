@@ -1,15 +1,39 @@
 const express = require('express');
 const cors = require('cors');
-const { userRouter,
-  loginRouter, productsRouter, customerRouter, salesProductsRouter } = require('../routes');
 
 const app = express();
 
-const error = require('../middlewares/error');
-
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
+
+const http = require('http').createServer(app);
+
+const io = require('socket.io')(http, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'], 
+  },
+});
+const { setStatusService } = require('../app/services/customerService');
+
+io.on('connection', (socket) => {
+  socket.on('Status', (newStatus) => {
+    setStatusService(newStatus);
+    console.log(newStatus);
+  });
+});
+
+// require('../socket/status')(io);
+
+const error = require('../middlewares/error');
+const { 
+  userRouter,
+  loginRouter, 
+  productsRouter, 
+  customerRouter, 
+  salesProductsRouter, 
+} = require('../routes');
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 
@@ -22,4 +46,4 @@ app.use('/images', express.static('public'));
 
 app.use(error);
 
-module.exports = app;
+module.exports = http;

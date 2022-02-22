@@ -16,7 +16,7 @@ export async function postAll(url, object, token) {
   return data;
 }
 
-export async function edit(url, object) {
-  const { data } = await axiosInstance.put(url, object);
+export async function edit(url, id) {
+  const { data } = await axiosInstance.put(url, id);
   return data;
 }

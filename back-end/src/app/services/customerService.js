@@ -31,8 +31,14 @@ const createSalles = async (sale) => {
   return { data: [{ saleId: newSale.id }] };
 };
 
+const setStatusService = async ({ id, status }) => {
+  const statusUpdated = await Sale.update({ status }, { where: { id } });
+  return statusUpdated;
+};
+
 module.exports = {
   getAll,
   getById,
   createSalles,
+  setStatusService,
 };
